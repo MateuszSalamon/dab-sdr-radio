@@ -79,6 +79,16 @@ Why this matters: OFDM demodulation recovers the transmitted carriers and reduce
   - new slides are available
 - A central DAB database (DAB_Database) contains the parsed configuration and current service/component states; GUI components read this or subscribe to updates through a DatabaseUpdater.
 
+---
+
+## Rendered diagram
+
+- Mermaid source: `reference/dab_iq_pipeline/implementation/diagram.mmd`
+- Rendered SVG: `reference/dab_iq_pipeline/implementation/diagram.svg`
+
+You can view the Mermaid source or open the SVG directly in a browser. The Mermaid source is also embeddable in supporting viewers.
+
+
 ## Flowchart (linear ASCII)
 
 IQ samples
@@ -138,7 +148,7 @@ Threading model
 
 Key types & terms
 - CIF: Common Interleaved Frame — a DAB framing unit
-- FIB: Fast Information Block �� small control block inside FIC
+- FIB: Fast Information Block — small control block inside FIC
 - FIG: Fast Information Group — higher-level control objects (labels, subchannel maps, MOT registration)
 - MSC: Main Service Channel — contains audio/data payloads multiplexed across subchannels
 - DQPSK: Differential QPSK — carrier modulation used in DAB carrier symbols
@@ -161,4 +171,3 @@ Key types & terms
 ---
 
 This file is committed under reference/dab_iq_pipeline/implementation/DAB_IQ_to_Audio_Guide.md
-If you'd like, I can also add a mermaid or SVG diagram file, or break this guide into separate README + architecture diagram files.

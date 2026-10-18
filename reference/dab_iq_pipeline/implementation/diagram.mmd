@@ -1,0 +1,15 @@
+flowchart LR
+  IQ["IQ samples"] --> OFDM["OFDM demodulator\n(null/PRS detection, FFT)"]
+  OFDM --> DQPSK["DQPSK demap\n(soft metrics)"]
+  DQPSK --> VIT["Viterbi decode\n(viterbi_bit_t frame)"]
+  VIT --> Split["Frame split\n(FIC | MSC)"]
+  Split --> FIC["FIC (control)"]
+  Split --> MSC["MSC (services)"]
+  FIC --> FIC_DEC["FIC_Decoder\n(Viterbi + descramble + CRC)"]
+  FIC_DEC --> FIB["FIBs (payload bytes)"]
+  FIB --> FIG["FIG_Processor\n(parse FIGs)"]
+  FIG --> RADIOFIG["Radio_FIG_Handler\n-> DAB_Database updates"]
+  MSC --> MSC_RUN["MSC Runners\n(per-subchannel)"]
+  MSC_RUN --> AUDIO["Audio decoders\n(DAB/DAB+) & MOT"]
+  AUDIO --> GUI["GUI / Playback / Slideshow"]
+  RADIOFIG --> GUI
