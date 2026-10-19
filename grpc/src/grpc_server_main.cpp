@@ -9,6 +9,7 @@
 #include "fic_service.h"
 #include "basic_radio_service.h"
 #include "grpc_adapter_interfaces.h"
+#include "live_bindings.h"
 
 int main(int argc, char** argv) {
     (void)argc;
@@ -16,9 +17,11 @@ int main(int argc, char** argv) {
 
     const std::string server_address = "0.0.0.0:50051";
 
-    auto ofdm_bridge = std::make_shared<dab::grpc::NoOpOfdmBridge>();
-    auto fic_bridge = std::make_shared<dab::grpc::NoOpFICBridge>();
-    auto radio_bridge = std::make_shared<dab::grpc::NoOpBasicRadioBridge>();
+    const auto params = get_dab_parameters(1);
+
+    auto ofdm_bridge = std::make_shared<dab::grpc::LiveOfdmBridge>(nullptr);
+    auto fic_bridge = std::make_shared<dab::grpc::LiveFICBridge>(dab::grpc::CreateLiveFIC(params));
+    auto radio_bridge = std::make_shared<dab::grpc::LiveBasicRadioBridge>(dab::grpc::CreateLiveBasicRadio(params, 2));
 
     dab::grpc::OfdmServiceImpl ofdm_service(ofdm_bridge);
     dab::grpc::FicServiceImpl fic_service(fic_bridge);
@@ -36,7 +39,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    std::cout << "gRPC server listening on " << server_address << std::endl;
+    std::cout << "Live gRPC server listening on " << server_address << std::endl;
     server->Wait();
     return 0;
 }
