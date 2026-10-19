@@ -55,6 +55,12 @@ set(BASIC_RADIO_USE_EASYLOGGING ON CACHE BOOL "Use easylogging for basic_radio" 
 set(BASIC_SCRAPER_USE_EASYLOGGING ON CACHE BOOL "Use easylogging for basic_scraper" FORCE)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)
+
+option(DAB_ENABLE_GRPC "Build optional gRPC testing interfaces in grpc/." OFF)
+if(DAB_ENABLE_GRPC)
+    add_subdirectory(${CMAKE_SOURCE_DIR}/grpc)
+endif()
+
 add_subdirectory(${CMAKE_SOURCE_DIR}/examples)
 
 # private compiler flags from CMakePresets.json
