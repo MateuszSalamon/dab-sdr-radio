@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package dab.grpc;
+
+message ProcessBlockRequest {
+  repeated float iq_samples = 1;
+}
+
+message ProcessBlockResponse {
+  bool ok = 1;
+  string status = 2;
+  repeated int32 bits = 3;
+}
+
+message GetStatusRequest {}
+
+message GetStatusResponse {
+  string state = 1;
+  float fine_frequency_offset = 2;
+  float coarse_frequency_offset = 3;
+  int32 total_frames_read = 4;
+}
+
+message DecodeFIBGroupRequest {
+  repeated int32 encoded_bits = 1;
+  int32 cif_index = 2;
+}
+
+message DecodeFIBGroupResponse {
+  bool ok = 1;
+  string status = 2;
+  repeated int32 decoded_bytes = 3;
+}
+
+message ProcessBitsRequest {
+  repeated int32 encoded_bits = 1;
+}
+
+message ProcessBitsResponse {
+  bool ok = 1;
+  string status = 2;
+}
+
+message AudioChannelRequest {
+  int32 subchannel_id = 1;
+}
+
+message AudioChannelResponse {
+  bool found = 1;
+  string status = 2;
+}
+
+service OFDMService {
+  rpc ProcessBlock(ProcessBlockRequest) returns (ProcessBlockResponse);
+  rpc GetStatus(GetStatusRequest) returns (GetStatusResponse);
+}
+
+service FICService {
+  rpc DecodeFIBGroup(DecodeFIBGroupRequest) returns (DecodeFIBGroupResponse);
+}
+
+service BasicRadioService {
+  rpc ProcessBits(ProcessBitsRequest) returns (ProcessBitsResponse);
+  rpc GetAudioChannel(AudioChannelRequest) returns (AudioChannelResponse);
+  rpc GetDataPacketChannel(AudioChannelRequest) returns (AudioChannelResponse);
+}
