@@ -17,7 +17,7 @@ set(ARGPARSE_INSTALL OFF CACHE BOOL "Include an install target" FORCE)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/argparse)
 
 # use prebuilt binaries for windows otherwise pkgconfig
-if(WIN32) 
+if(WIN32)
     set(rtlsdr_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vendor/librtlsdr)
     find_package(rtlsdr CONFIG REQUIRED)
     set(RTLSDR_LIBS rtlsdr::rtlsdr)
@@ -42,9 +42,9 @@ else()
 endif()
 
 # for posix threads
-if(NOT WIN32) 
+if(NOT WIN32)
     find_package(Threads REQUIRED)
-    add_compile_options(-pthread) 
+    add_compile_options(-pthread)
     link_libraries(Threads::Threads)
 endif()
 
