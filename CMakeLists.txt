@@ -55,12 +55,6 @@ set(BASIC_RADIO_USE_EASYLOGGING ON CACHE BOOL "Use easylogging for basic_radio" 
 set(BASIC_SCRAPER_USE_EASYLOGGING ON CACHE BOOL "Use easylogging for basic_scraper" FORCE)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)
-
-option(DAB_ENABLE_GRPC "Build optional gRPC testing interfaces in grpc/." OFF)
-if(DAB_ENABLE_GRPC)
-    add_subdirectory(${CMAKE_SOURCE_DIR}/grpc)
-endif()
-
 add_subdirectory(${CMAKE_SOURCE_DIR}/examples)
 
 # private compiler flags from CMakePresets.json
@@ -68,11 +62,13 @@ function(add_project_target_flags target)
     separate_arguments(PRIVATE_ARGS NATIVE_COMMAND "${PROJECT_TARGET_PRIVATE_COMPILER_FLAGS}")
     target_compile_options(${target} PRIVATE ${PRIVATE_ARGS})
 endfunction()
+
 # src/
 add_project_target_flags(ofdm_core)
 add_project_target_flags(dab_core)
 add_project_target_flags(basic_radio)
 add_project_target_flags(basic_scraper)
+add_project_target_flags(viterbi_replacement)
 # examples/*.cpp
 add_project_target_flags(radio_app)
 add_project_target_flags(basic_radio_app)
