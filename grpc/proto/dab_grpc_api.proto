@@ -50,6 +50,30 @@ message AudioChannelResponse {
   string status = 2;
 }
 
+message DecodeSoftRequest {
+  repeated int32 soft_symbols = 1;
+  repeated uint32 puncture_code = 2;
+  uint64 requested_output_bits = 3;
+}
+
+message DecodeSoftResponse {
+  bool ok = 1;
+  string status = 2;
+  repeated uint32 output_bytes = 3;
+}
+
+message DecodeBitsRequest {
+  repeated uint32 hard_bits = 1;
+  repeated uint32 puncture_code = 2;
+  uint64 requested_output_bits = 3;
+}
+
+message DecodeBitsResponse {
+  bool ok = 1;
+  string status = 2;
+  repeated uint32 output_bytes = 3;
+}
+
 service OFDMService {
   rpc ProcessBlock(ProcessBlockRequest) returns (ProcessBlockResponse);
   rpc GetStatus(GetStatusRequest) returns (GetStatusResponse);
@@ -63,4 +87,9 @@ service BasicRadioService {
   rpc ProcessBits(ProcessBitsRequest) returns (ProcessBitsResponse);
   rpc GetAudioChannel(AudioChannelRequest) returns (AudioChannelResponse);
   rpc GetDataPacketChannel(AudioChannelRequest) returns (AudioChannelResponse);
+}
+
+service ViterbiService {
+  rpc DecodeSoft(DecodeSoftRequest) returns (DecodeSoftResponse);
+  rpc DecodeBits(DecodeBitsRequest) returns (DecodeBitsResponse);
 }
